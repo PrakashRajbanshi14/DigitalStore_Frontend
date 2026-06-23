@@ -1,14 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productSlice from "./productSlice";
-import userSlice from "./userSlice";
+import authSlice from "./authSlice"
 
 const store = configureStore({
     reducer: {
-        product : productSlice,
-        user : userSlice
+        auth : authSlice
     }
 })
 
 export default store
+// exporting defined type from store for the useDispatch, useSelecter
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
