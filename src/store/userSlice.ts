@@ -11,11 +11,11 @@ const userSlice = createSlice({
     name : "user",
     initialState : userInfo,
     reducers : {
-        setName(state:User,action:PayloadAction<User>){
-            state.name = "helloWorld"
+        setName(state:User,action:PayloadAction<string>){
+            state.name = action.payload
         },
-        setAge(state:User,action:PayloadAction<User>){
-            state.age = 12
+        setAge(state:User,action:PayloadAction<number>){
+            state.age = action.payload
         }
     }
 })
