@@ -1,9 +1,12 @@
-import type * as React from "react"
-import { useState, type ChangeEvent } from "react"
-import { useAppDispatch } from "../../store/hooks"
+import { useState,useEffect, type ChangeEvent } from "react"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { registerUser } from "../../store/authSlice"
+import { useNavigate } from "react-router-dom"
+import { Status } from "../../globals/types/type"
 
 function Register(){
+    const {status} = useAppSelector((store)=>store.auth)
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [data, setData] = useState({
         username: "",
@@ -23,6 +26,15 @@ function Register(){
         e.preventDefault()
         dispatch(registerUser(data))
     }
+
+    useEffect(()=>{
+       if(status === Status.SUCCESS){
+            navigate("/login", { replace: true })
+        }else if (status === Status.ERROR){
+            alert("Something went wrong")
+        }
+   },[status, navigate])
+
     return(
         <>
         <div className="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">

@@ -2,13 +2,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Register from "./pages/user/Register"
 import { Provider } from "react-redux"
 import store from "./store/store"
+import Login from "./pages/user/Login"
+import Home from "./pages/home/Home"
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </Provider>
