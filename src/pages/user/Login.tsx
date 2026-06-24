@@ -2,7 +2,7 @@ import { type ChangeEvent, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { loginUser, resetStatus } from "../../store/authSlice"
 import { Status } from "../../globals/types/type"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 function Login(){
@@ -75,6 +75,7 @@ function Login(){
                         Account
                         </button>
                 </div>
+                <p className="text-center">Not Registered ? <Link to="/register" className="text-blue-600">Register Here</Link> </p>
             </form>
         </div>
     </div>

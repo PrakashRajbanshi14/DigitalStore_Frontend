@@ -7,6 +7,7 @@ interface IUser{
     username : string | null,
     email: string | null,
     password : string | null,
+    token?: string | null
 }
 
 interface ILoginUser{
@@ -23,7 +24,8 @@ const initialState:IAuthState = {
     user : {
         username: null,
         email: null,
-        password: null
+        password: null,
+        token:  null
     },
     status : Status.LOADING
 }
@@ -40,12 +42,15 @@ const authSlice = createSlice({
         },
         resetStatus(state:IAuthState){
             state.status = Status.LOADING
+        },
+        setToken(state:IAuthState, action:PayloadAction<string>){
+            state.user.token = action.payload
         }
     }
 })
 
 
-export const {setStatus, setUser, resetStatus} = authSlice.actions
+export const {setStatus, setUser, resetStatus, setToken} = authSlice.actions
 export default authSlice.reducer
 
 export function registerUser(data:IUser){
@@ -69,8 +74,15 @@ export function loginUser(data:ILoginUser){
     return async function loginUserThunk(dispatch:AppDispatch){
         try {
              const response = await API.post("/auth/login",data)
+             const tokenData = response.data.token
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
+                if(response.data.token){
+                    localStorage.setItem("token", tokenData)
+                    dispatch(setToken(tokenData))
+                }else{
+                    dispatch(setStatus(Status.ERROR))
+                }
             }else{
                 dispatch(setStatus(Status.ERROR))
             }

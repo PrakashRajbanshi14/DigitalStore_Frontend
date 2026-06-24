@@ -1,48 +1,16 @@
-import { Link } from "react-router-dom"
+import Navbar from "../../globals/components/Navbar"
+
 
 
 function Home(){
     return (
-
 <div>
-  <header className="sticky top-0 bg-white shadow">
-    <div className="container flex flex-col sm:flex-row justify-between items-center mx-auto py-4 px-8">
-      <div className="flex items-center text-2xl">
-        <div className="w-12 mr-3">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-            <path fill="#BEE3F8" d="M44,7L4,23l40,16l-7-16L44,7z M36,23H17l18-7l1,6V23z" />
-            <path fill="#3182CE" d="M40.212,10.669l-5.044,11.529L34.817,23l0.351,0.802l5.044,11.529L9.385,23L40.212,10.669 M44,7L4,23 l40,16l-7-16L44,7L44,7z">
-            </path>
-            <path  fill="#3182CE" d="M36,22l-1-6l-18,7l17,7l-2-5l-8-2h12V22z M27.661,21l5.771-2.244L33.806,21H27.661z">
-            </path>
-          </svg>
-        </div>Lander
-      </div>
-      <div className="flex mt-4 sm:mt-0">
-        <a className="px-4" href="#features">Features</a>
-        <a className="px-4" href="#services">Services</a>
-        <a className="px-4" href="#stats">Stats</a>
-        <a className="px-4" href="#testimonials">Testimonials</a>
-      </div>
-      
-      <div className="hidden md:block">
-   <Link to='/register'>
-   <button type="button" className="mr-5 py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">Register
-        </button>
-   </Link>
-   <Link to='/login'>
-   <button type="button" className=" py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">Login
-        </button>
-   </Link>
-      </div>
-    </div>
-  </header>
+ <Navbar/>
   <main className="text-gray-900">
     <section className="pt-20 md:pt-40">
       <div className="container mx-auto px-8 lg:flex">
         <div className="text-center lg:text-left lg:w-1/2">
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-none">Main title of your
-            landing page</h1>
+          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-none">Digital Store</h1>
           <p className="text-xl lg:text-2xl mt-6 font-light">Free landing page template to promote your
             business startup and generate leads for the offered services
           </p>
@@ -582,7 +550,7 @@ function Home(){
               <p className="mt-6">Eu lobortis elementum nibh tellus molestie nunc non blandit massa.
                 Sit amet consectetur adipiscing elit duis.
               </p>
-              <div className="flex items-center mt-8"><img className="w-12 h-12 mr-4 rounded-full" src="https://placeimg.com/150/150/people" alt="Jane Doe" />
+              <div className="flex items-center mt-8"><img className="w-12 h-12 mr-4 rounded-full" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTA3L3Jhd3BpeGVsX29mZmljZV80MV9wb3J0cmFpdF9vZl9waG90b19vZl9idXNpbmVzc19tYW5fZG9pbmdfY3Jvc19hYzI5NmNmMy1hZmQ4LTQ3ZDQtYTY1NS1mZWVjMGZhMDU5ZWMucG5n.png" alt="Jane Doe" />
                 <div>
                   <p>Jane Doe
                   </p>
@@ -599,7 +567,7 @@ function Home(){
               <p className="mt-6">Eu lobortis elementum nibh tellus molestie nunc non blandit massa.
                 Sit amet consectetur adipiscing elit duis.
               </p>
-              <div className="flex items-center mt-8"><img className="w-12 h-12 mr-4 rounded-full" src="https://placeimg.com/150/150/people" alt="John Doe" />
+              <div className="flex items-center mt-8"><img className="w-12 h-12 mr-4 rounded-full" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTA3L3Jhd3BpeGVsX29mZmljZV80MV9wb3J0cmFpdF9vZl9waG90b19vZl9idXNpbmVzc19tYW5fZG9pbmdfY3Jvc19hYzI5NmNmMy1hZmQ4LTQ3ZDQtYTY1NS1mZWVjMGZhMDU5ZWMucG5n.png" alt="John Doe" />
                 <div>
                   <p>John Doe
                   </p>
@@ -616,7 +584,7 @@ function Home(){
               <p className="mt-6">Eu lobortis elementum nibh tellus molestie nunc non blandit massa.
                 Sit amet consectetur adipiscing elit duis.
               </p>
-              <div className="flex items-center mt-8"><img className="w-12 h-12 mr-4 rounded-full" src="https://placeimg.com/150/150/people" alt="Jane Smith" />
+              <div className="flex items-center mt-8"><img className="w-12 h-12 mr-4 rounded-full" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTA3L3Jhd3BpeGVsX29mZmljZV80MV9wb3J0cmFpdF9vZl9waG90b19vZl9idXNpbmVzc19tYW5fZG9pbmdfY3Jvc19hYzI5NmNmMy1hZmQ4LTQ3ZDQtYTY1NS1mZWVjMGZhMDU5ZWMucG5n.png" alt="Jane Smith" />
                 <div>
                   <p>Jane Smith
                   </p>
