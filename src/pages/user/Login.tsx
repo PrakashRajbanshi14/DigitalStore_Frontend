@@ -1,6 +1,6 @@
 import { type ChangeEvent, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { loginUser } from "../../store/authSlice"
+import { loginUser, resetStatus } from "../../store/authSlice"
 import { Status } from "../../globals/types/type"
 import { useNavigate } from "react-router-dom"
 
@@ -29,11 +29,12 @@ function Login(){
 
     useEffect(() => {
         if (status === Status.SUCCESS) {
-            navigate("/home", { replace: true })
+            dispatch(resetStatus())
+            navigate("/")
         } else if (status === Status.ERROR) {
             alert("Something went wrong")
         }
-    }, [status, navigate])
+    }, [status, navigate, dispatch])
 
     return ( 
         <div className="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">

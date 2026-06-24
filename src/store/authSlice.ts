@@ -6,7 +6,7 @@ import API from "../http";
 interface IUser{
     username : string | null,
     email: string | null,
-    password : string | null
+    password : string | null,
 }
 
 interface ILoginUser{
@@ -37,12 +37,15 @@ const authSlice = createSlice({
         },
         setStatus(state:IAuthState, action:PayloadAction<Status>){
             state.status = action.payload
+        },
+        resetStatus(state:IAuthState){
+            state.status = Status.LOADING
         }
     }
 })
 
 
-export const {setStatus, setUser} = authSlice.actions
+export const {setStatus, setUser, resetStatus} = authSlice.actions
 export default authSlice.reducer
 
 export function registerUser(data:IUser){

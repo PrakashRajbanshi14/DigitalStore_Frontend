@@ -1,6 +1,6 @@
 import { useState,useEffect, type ChangeEvent } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { registerUser } from "../../store/authSlice"
+import { registerUser, resetStatus } from "../../store/authSlice"
 import { useNavigate } from "react-router-dom"
 import { Status } from "../../globals/types/type"
 
@@ -29,11 +29,12 @@ function Register(){
 
     useEffect(()=>{
        if(status === Status.SUCCESS){
-            navigate("/login", { replace: true })
+            dispatch(resetStatus())
+            navigate("/login")
         }else if (status === Status.ERROR){
             alert("Something went wrong")
         }
-   },[status, navigate])
+   },[status, navigate, dispatch])
 
     return(
         <>
