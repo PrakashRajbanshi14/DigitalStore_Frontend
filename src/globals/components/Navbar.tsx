@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom"
-import { useAppSelector } from "../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { useEffect, useState } from "react"
+import { fetchCartItems } from "../../store/cartSlice"
 
 function Navbar() {
     const reduxToken = useAppSelector((store)=>store.auth.user.token)
     const localStorageToken = localStorage.getItem("token")
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+    const dispatch = useAppDispatch()
 
     useEffect(()=> {
         // setIsLoggedIn(!!localStorageToken || !!reduxToken)
         if(reduxToken && localStorageToken){
             setIsLoggedIn(true)
         }
-    }, [])
+        if(isLoggedIn){
+          dispatch(fetchCartItems())
+        }
+    }, [isLoggedIn])
     return (
         <>
             <header className="sticky top-0 bg-white shadow">
@@ -30,16 +35,17 @@ function Navbar() {
                     </div>
                     <div className="flex mt-4 sm:mt-0">
                         <Link className="px-4" to="/products">Products</Link>
-                        <Link className="px-4" to="#services">Services</Link>
-                        <Link className="px-4" to="#stats">Stats</Link>
-                        <Link className="px-4" to="#testimonials">Testimonials</Link>
                     </div>
-
+    
                     <div className="hidden md:block">
                         {isLoggedIn? (
+                             <>
+                            <span className="mr-[10px]"> <Link to='/my-cart'>Cart <sup>1</sup> </Link></span>
+
                              <Link to='/logout'>
                                 <button type="button" className="mr-5 py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">Logout</button>
                             </Link>
+                             </>
                             ): (
                                 <>
                                     <Link to='/register'>
