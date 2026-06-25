@@ -4,6 +4,7 @@ import { Provider } from "react-redux"
 import store from "./store/store"
 import Login from "./pages/user/Login"
 import Home from "./pages/home/Home"
+import Product from "./pages/product/Product"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/products" element={<Product />} />
         </Routes>
       </BrowserRouter>
     </Provider>

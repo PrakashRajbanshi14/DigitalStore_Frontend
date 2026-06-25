@@ -29,10 +29,10 @@ function Navbar() {
                         </div>DS..
                     </div>
                     <div className="flex mt-4 sm:mt-0">
-                        <a className="px-4" href="#features">Features</a>
-                        <a className="px-4" href="#services">Services</a>
-                        <a className="px-4" href="#stats">Stats</a>
-                        <a className="px-4" href="#testimonials">Testimonials</a>
+                        <Link className="px-4" to="/products">Products</Link>
+                        <Link className="px-4" to="#services">Services</Link>
+                        <Link className="px-4" to="#stats">Stats</Link>
+                        <Link className="px-4" to="#testimonials">Testimonials</Link>
                     </div>
 
                     <div className="hidden md:block">
