@@ -24,7 +24,7 @@ function Product() {
                 {
                     products.length > 0 && products.map((product)=>{
                         return(
-                          <Card product={product} />
+                          <Card key={product.id} product={product} />
                         )
                     })
                 }

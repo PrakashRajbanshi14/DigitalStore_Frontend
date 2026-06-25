@@ -16,10 +16,11 @@ export interface IProduct{
     createdAt: string,
     updatedAt: string,
     categoryId: string,
-    category : ICategory
+    Category : ICategory
 }
 
 export interface IProducts{
     products : IProduct[],
-    status: Status
+    status: Status,
+    product: IProduct | null
 }
