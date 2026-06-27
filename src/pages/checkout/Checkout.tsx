@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type SubmitEvent } from "react"
+import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react"
 import Navbar from "../../globals/components/Navbar"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import  {type IData, PaymentMethod } from "./types"
@@ -8,8 +8,8 @@ import { orderItem } from "../../store/checkoutSlice"
 function Checkout(){
     const dispatch = useAppDispatch()
     const {items} =  useAppSelector((store)=>store.cart)
+    const {khaltiUrl,status} =  useAppSelector((store)=>store.orders)
     const total = items.reduce((total,item)=>item.Product.productPrice * item.quantity + total,0)
-    console.log(items)
 
     const [data,setData] = useState<IData>({
         firstName : "", 
@@ -24,6 +24,15 @@ function Checkout(){
         paymentMethod : PaymentMethod.Cod, 
         products : []
     })
+   const [paymentMethod,setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.Cod)
+    const handlePaymentMethod = (paymentData:PaymentMethod)=>{
+      setPaymentMethod(paymentData)
+      setData({
+        ...data, 
+        paymentMethod : paymentData
+      })
+    }
+
     const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
         const {name,value} =  e.target
         setData({
@@ -31,7 +40,7 @@ function Checkout(){
             [name] : value
         })
     }
-    const handleSubmit = (e:SubmitEvent<HTMLFormElement>)=>{
+    const handleSubmit = async(e:SubmitEvent<HTMLFormElement>)=>{
         e.preventDefault()
         const productData =  items.length > 0 ? items.map((item)=>{
             return {
@@ -44,8 +53,16 @@ function Checkout(){
             products : productData, 
             totalAmount : total
         }
-        dispatch(orderItem(finalData))
+        await dispatch(orderItem(finalData))
     }
+    useEffect(()=>{
+      console.log(khaltiUrl)
+      if(khaltiUrl){
+        window.location.href = khaltiUrl
+        return; 
+      }
+    },[khaltiUrl,status])
+    console.log(khaltiUrl)
     return(
         <>
         <Navbar />
@@ -117,16 +134,41 @@ function Checkout(){
             <div>
               <input type="text" name="zipCode" onChange={handleChange} placeholder="Zip Code" className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
             </div>
+            
+            <div>
+                <label htmlFor="paymentMethod">Payment method : </label>
+                <select name="paymentMethod" id="paymentMethod" onChange={(e)=>handlePaymentMethod(e.target.value as PaymentMethod)}>
+                  <option value={PaymentMethod.Cod}>COD</option>
+                  <option value={PaymentMethod.Khalti}>Khalti</option>
+                  <option value={PaymentMethod.Esewa}>Esewa</option>
+                </select>
+            </div>
+
           </div>
-          <div className="flex gap-4 max-md:flex-col mt-8">
-            <button type="submit" className="rounded-md px-4 py-2.5 w-full text-sm tracking-wide bg-blue-600 hover:bg-blue-700 text-white">Complete Purchase</button>
-          </div>
+           <div className="flex gap-4 max-md:flex-col mt-8">
+          {
+            paymentMethod === PaymentMethod.Cod && (
+             
+                <button type="submit" className="rounded-md px-4 py-2.5 w-full text-sm tracking-wide bg-blue-600 hover:bg-blue-700 text-white">Pay with Cash On Delivery</button>
+             
+            )
+          }
+          {
+            paymentMethod === PaymentMethod.Khalti && (
+              <button type="submit" className="rounded-md px-4 py-2.5 w-full text-sm tracking-wide bg-purple-600 hover:bg-blue-700 text-white">Pay With Khalti</button>
+            )
+          }
+          {
+            paymentMethod === PaymentMethod.Esewa && (
+              <button type="submit" className="rounded-md px-4 py-2.5 w-full text-sm tracking-wide bg-green-600 hover:bg-blue-700 text-white">Pay With Esewa</button>
+            )
+          }
+           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
-
         </>
     )
 }

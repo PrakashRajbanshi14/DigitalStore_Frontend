@@ -9,7 +9,7 @@ const store = configureStore({
         auth : authSlice,
         products: productSlice,
         cart : cartSlice,
-        checkout: checkoutSlice
+        orders: checkoutSlice
     }
 })
 

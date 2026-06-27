@@ -1,15 +1,14 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice,type PayloadAction } from "@reduxjs/toolkit";
 import type { IData, IOrder, IOrderItems } from "../pages/checkout/types";
 import { Status } from "../globals/types/type";
-import type { AppDispatch } from "./store";
+import {type AppDispatch } from "./store";
 import { APIWITHTOKEN } from "../http";
 
 const initialState:IOrder = {
     status : Status.LOADING, 
     items : [], 
     khaltiUrl : null,
-    orderDetails : []
-
+    khaltiPidx : null
 }
 
 const orderSlice = createSlice({
@@ -25,6 +24,9 @@ const orderSlice = createSlice({
         setKhaltiUrl(state:IOrder,action:PayloadAction<string>){
             state.khaltiUrl = action.payload
         }, 
+        // setKhaltiPidx(state:IOrder,action:PayloadAction<string>){
+        //     state.khaltiPidx = action.payload
+        // }, 
     }
 })
 
@@ -38,13 +40,19 @@ export function orderItem(data:IData){
            if(response.status === 200){
             dispatch(setStatus(Status.SUCCESS))
             dispatch(setItems(response.data.data))
-            if(response.data.url){
-                setKhaltiUrl(response.data.url)
+            const khaltiUrl = response.data.payment_url || response.data.url || response.data.payment?.payment_url || response.data.payment?.url
+            // const khaltiPidx = response.data.pidx || response.data.payment?.pidx
+            if(khaltiUrl){
+                dispatch(setKhaltiUrl(khaltiUrl))
             }
+            // if(khaltiPidx){
+            //     dispatch(setKhaltiPidx(khaltiPidx))
+            // }
            }else{
             dispatch(setStatus(Status.ERROR))
            }
         } catch (error) {
+            console.log(error)
             dispatch(setStatus(Status.ERROR))
         }
     }
