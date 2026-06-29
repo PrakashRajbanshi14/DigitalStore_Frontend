@@ -3,12 +3,13 @@ import type { IData, IOrder, IOrderItems } from "../pages/checkout/types";
 import { Status } from "../globals/types/type";
 import {type AppDispatch } from "./store";
 import { APIWITHTOKEN } from "../http";
+import  {type IOrderDetail, OrderStatus  } from "../pages/my-orders-details/types";
 
 const initialState:IOrder = {
     status : Status.LOADING, 
     items : [], 
     khaltiUrl : null,
-    khaltiPidx : null
+    orderDetails: []
 }
 
 const orderSlice = createSlice({
@@ -24,14 +25,24 @@ const orderSlice = createSlice({
         setKhaltiUrl(state:IOrder,action:PayloadAction<string>){
             state.khaltiUrl = action.payload
         }, 
-        // setKhaltiPidx(state:IOrder,action:PayloadAction<string>){
-        //     state.khaltiPidx = action.payload
-        // }, 
+        setOrderDetails(state:IOrder, action:PayloadAction<IOrderDetail[]>){
+            state.orderDetails = action.payload
+        },
+        updateOrderStatusToCancel(state:IOrder, action: PayloadAction<{orderId:string}>){
+            const orderId = action.payload.orderId
+            // state.items.map((item)=>item.)
+            // console.log(state.items,"ST")
+            // const data =  state.orderDetails.map((order)=>order.orderId == orderId ? {...order, [order.Order.orderStatus] : OrderStatus.Cancelled} : order)
+            const datas = state.orderDetails.find((order)=>order.orderId === orderId)
+            datas ? datas.Order.orderStatus = OrderStatus.Cancelled : ""
+            // state.orderDetails = data
+           
+        }
     }
 })
 
 export default orderSlice.reducer
-const {setItems,setStatus,setKhaltiUrl} = orderSlice.actions
+const {setItems,setStatus,setKhaltiUrl, setOrderDetails, updateOrderStatusToCancel} = orderSlice.actions
 
 export function orderItem(data:IData){
     return async function orderItemThunk(dispatch:AppDispatch){
@@ -45,9 +56,6 @@ export function orderItem(data:IData){
             if(khaltiUrl){
                 dispatch(setKhaltiUrl(khaltiUrl))
             }
-            // if(khaltiPidx){
-            //     dispatch(setKhaltiPidx(khaltiPidx))
-            // }
            }else{
             dispatch(setStatus(Status.ERROR))
            }
@@ -83,7 +91,25 @@ export function fetchMyOrderDetails(id:string){
             const response =  await APIWITHTOKEN.get("/order/" + id)
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
-                dispatch(setItems(response.data.data))
+                dispatch(setOrderDetails(response.data.data))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+
+        }
+    }
+}
+
+export function cancelOrderAPI(id:string){
+    return async function cancelOrderAPIThunk(dispatch:AppDispatch){
+        try {
+            const response =  await APIWITHTOKEN.patch("/order/cancel-order/" + id)
+            if(response.status === 200){
+                dispatch(setStatus(Status.SUCCESS))
+                dispatch(updateOrderStatusToCancel({orderId : id}))
             }else{
                 dispatch(setStatus(Status.ERROR))
             }

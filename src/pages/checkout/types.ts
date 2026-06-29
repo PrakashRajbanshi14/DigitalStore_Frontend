@@ -1,4 +1,5 @@
 import { Status } from "../../globals/types/type";
+import type { IOrderDetail } from "../my-orders-details/types";
 
 interface IProduct{
     productId : string, 
@@ -11,15 +12,15 @@ interface IProduct{
     }
 }
 export interface IOrderItems extends IProduct{
-    id : string
+    id : string,
+    orderId : string
 }
 
 export interface IOrder{
     status : Status, 
     items : IOrderItems[], 
     khaltiUrl : string | null,
-    khaltiPidx : string | null 
-
+    orderDetails : IOrderDetail[]
 }
 
 export enum PaymentMethod{

@@ -25,9 +25,9 @@ export interface IOrderDetail {
     productId: string,
     Order: {
         orderStatus: OrderStatus,
-        AddressLine: string,
-        City: string,
-        State: string,
+        addressLine: string,
+        city: string,
+        state: string,
         totalAmount: number,
         phoneNumber: string,
         firstName : string, 
