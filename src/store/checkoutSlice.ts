@@ -88,7 +88,7 @@ export function fetchMyOrders(){
 export function fetchMyOrderDetails(id:string){
     return async function fetchMyOrderDetailsThunk(dispatch:AppDispatch){
         try {
-            const response =  await APIWITHTOKEN.get("/order/" + id)
+            const response =  await APIWITHTOKEN.get("/order/" +id)
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(setOrderDetails(response.data.data))
@@ -106,7 +106,7 @@ export function fetchMyOrderDetails(id:string){
 export function cancelOrderAPI(id:string){
     return async function cancelOrderAPIThunk(dispatch:AppDispatch){
         try {
-            const response =  await APIWITHTOKEN.patch("/order/cancel-order/" + id)
+            const response =  await APIWITHTOKEN.patch("/order/cancel-order/" +id)
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(updateOrderStatusToCancel({orderId : id}))
