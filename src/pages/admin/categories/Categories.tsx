@@ -1,4 +1,5 @@
 import AdminLayout from "../AdminLayout"
+import CategoryTable from "./components/Table"
 
 
 
@@ -6,8 +7,7 @@ import AdminLayout from "../AdminLayout"
 function Categories(){
     return (
         <AdminLayout>
-          
-        <h1>Hello</h1>
+          <CategoryTable/>
         </AdminLayout>
     )
 }
