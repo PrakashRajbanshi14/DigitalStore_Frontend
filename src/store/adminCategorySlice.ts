@@ -34,6 +34,13 @@ const categorySlice = createSlice({
                 state.items.unshift(category)
             }
         },
+        updateCategoryItem(state:ICategoryInitialState,action:PayloadAction<ICategory>){
+            const updatedCategory = action.payload
+            const index = state.items.findIndex(item => item.id === updatedCategory.id)
+            if(index !== -1){
+                state.items[index] = updatedCategory
+            }
+        },
         setStatus(state:ICategoryInitialState,action:PayloadAction<Status>){
             state.status = action.payload
         }, 
@@ -48,7 +55,7 @@ const categorySlice = createSlice({
         }
     }
 })
-export const {setItems,setStatus,setDeleteCategoryItem,addCategoryToItems, resetStatus} = categorySlice.actions
+export const {setItems,setStatus,setDeleteCategoryItem,addCategoryToItems,updateCategoryItem, resetStatus} = categorySlice.actions
 export default categorySlice.reducer
 
 export function addCategory(categoryName:string){
@@ -78,6 +85,33 @@ export function addCategory(categoryName:string){
     }
 }
 
+export function updateCategory(categoryId:string, categoryName:string){
+    return async function updateCategoryThunk(dispatch:AppDispatch){
+        try {
+            dispatch(setStatus(Status.LOADING))
+            const response = await APIWITHTOKEN.patch(`/category/${categoryId}`,{categoryName})
+            if(response.status === 200 || response.status === 201){
+                const category = response.data?.data
+                if(category && typeof category.id === "string"){
+                    dispatch(updateCategoryItem(category))
+                } else {
+                    dispatch(fetchCategoryItems())
+                }
+                dispatch(setStatus(Status.SUCCESS))
+                return true
+            }else{
+                console.warn("Unexpected update-category response:", response.data)
+                dispatch(setStatus(Status.ERROR))
+                return false
+            }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+            return false
+        }
+    }
+}
+
 export function fetchCategoryItems(){
     return async function fetchCategoryItemsThunk(dispatch:AppDispatch){
         try {
@@ -94,6 +128,7 @@ export function fetchCategoryItems(){
         }
     }
 }
+
 
 
 
